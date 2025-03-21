@@ -18,7 +18,10 @@ traducao_clima = {
     "thunderstorm": "tempestade",
     "snow": "neve",
     "mist": "névoa",
-    "light rain": "chuva leve"
+    "light rain": "chuva leve",
+    "overcast clouds": "nuvens nubladas",
+    "moderate rain": "chuva moderada",
+
 }
 
 #################cores ###############
@@ -92,7 +95,7 @@ def info():
 
     #giving info to labels
 
-    l_city['text'] = city.capitalize() + " - " + country.capitalize()
+    l_city['text'] = city.title() + " - " + country.title()
     l_date['text'] = zone_hours
     l_humidity['text'] = 'Umidade: ' + str(humidity) + '%'
     l_temp['text'] = str(temp)  + ' \u00B0C'
@@ -109,7 +112,16 @@ def info():
     global l_img
 
     zone_time = int(zone_time)
-    if zone_time <= 5:
+    if description == "overcast clouds" and zone_time <= 5:
+        l_img = Image.open("img/partly-cloudy-night-100.png")
+        backg = back_night
+    elif description == "scattered clouds" and zone_time <= 12:
+        l_img = Image.open("img/partly-cloudy-day-100.png")
+        backg = back_day
+    elif description == "light rain" and zone_time <= 18:
+        l_img = Image.open("img/chuva-leve-dia-100.png")
+        backg = back_afternoon
+    elif zone_time <= 5:
         # image
         l_img = Image.open("img/moon-and-stars-100.png")
         backg = back_night
